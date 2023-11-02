@@ -1,33 +1,11 @@
-const express = require('express')
+const express = require("express");
 
-const app = express()
-const port = 3333
+const app = express();
+app.use(express.json());
 
-// representasi data dari database
-const data_users = [
-    { id: 1, name: "Ilham Anugrah", alamat: "Sukabumi" },
-    { id: 2, name: "Ghina Khairunnisa", alamat: "Bandung" },
-    { id: 3, name: "Hana Syifa", alamat: "Jakarta" },
-    { id: 4, name: "Daehan Ibrahim", alamat: "Bandung" },
-];
+const port = 3333;
 
-app.get("/users/:id", (req, res) => {
-    // get data dari parameter
-    let id = parseInt(req.params.id);
+const router = require("./routes/index");
+app.use(router);
 
-    // get data dari database
-    let result;
-    const user = data_users.find((user) => user.id === id);
-    if (user) {
-        result = {
-        status: 200,
-        data: user,
-        };
-    } else {
-        res.status(404).json({ error: "User not found" });
-    }
-    res.json(result);
-});
-
-
-app.listen(port,() => console.log(`Server running on port ${port}`))
+app.listen(port, () => console.log(`Server runing on ${port}`));
